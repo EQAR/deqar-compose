@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+
+  nginx:
+    image: nginx
+    ports:
+      - "${DEQAR_API_PORT}:80"
+    depends_on:
+      - api
+    volumes:
+      - ${NGINX_CONF:-./nginx.conf}:/etc/nginx/templates/default.conf.template:ro
+      - reports:/usr/share/nginx/html/reports:ro
+      - staticfiles:/usr/share/nginx/html/static:ro
+
+  api:
+    build: ./api
+    volumes:
+      - ${DJANGO_SETTINGS:-./settings_local.py}:/deqar/eqar_backend/settings_components/local.py:ro
+      - reports:/api/reports
+      - staticfiles:/api/static
+    environment:
+      - DJANGO_SECRET_KEY
+      - DATABASE_URL=postgres://deqar:${DEQAR_DB_PASS}@db:5432/${DEQAR_DB_NAME}
+    command: >
+      ./wait-for-it.sh db:5432 --
+      bash -c "python manage.py collectstatic --no-input
+      && python manage.py migrate
+      && gunicorn --timeout=30 --workers=2 --log-file=- --bind :8000 eqar_backend.wsgi:application"
+    depends_on:
+      - db
+      - solr
+
+  celery:
+    restart: always
+    build: ./api
+    command: ./wait-for-it.sh db:5432 --
+      bash -c "celery -A eqar_backend worker -l info"
+    volumes:
+      - ${DJANGO_SETTINGS:-./settings_local.py}:/deqar/eqar_backend/settings_components/local.py:ro
+      - reports:/api/reports
+      - staticfiles:/api/static
+    environment:
+      - DJANGO_SECRET_KEY
+      - DJANGO_SETTINGS_MODULE=eqar_backend.settings
+      - DATABASE_URL=postgres://deqar:${DEQAR_DB_PASS}@db:5432/${DEQAR_DB_NAME}
+    depends_on:
+      - redis
+      - api
+      - solr
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis:/data
+
+  db:
+    image: postgres:9
+    restart: always
+    ports:
+      - "${DEQAR_DB_PORT}:5432"
+    environment:
+        POSTGRES_USER: deqar
+        POSTGRES_PASSWORD: ${DEQAR_DB_PASS}
+        POSTGRES_DB: ${DEQAR_DB_NAME}
+        PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ${INITDB_DIR:-./initdb.d}:/docker-entrypoint-initdb.d:ro
+      - pgdata:/var/lib/postgresql/data
+
+  solr:
+    image: solr:7
+    restart: always
+    volumes:
+      - solr:/opt/solr/server/solr/mycores
+      - ./solr/create-update-cores.sh:/docker-entrypoint-initdb.d/create-update-cores.sh:ro
+      - ./solr/cores:/opt/solr-cores-repo:ro
+      - ./solr/lib:/opt/solr/server/solr/lib:ro
+
+volumes:
+  pgdata:
+  solr:
+  reports:
+  staticfiles:
+  redis:
+
