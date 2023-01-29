@@ -83,10 +83,23 @@ SOLR_URL = "http://solr:8983/solr"
 SOLR_CORE_INSTITUTIONS = 'deqar-institutions'
 SOLR_CORE_AGENCIES = 'deqar-agencies'
 SOLR_CORE_REPORTS = 'deqar-reports'
+SOLR_CORE_REPORTS_V3 = 'deqar-reports-v3'
 
 # settings for VC issuance
 LETSTRUST_EQAR_EBSI_DID = "did:ebsi:..."
 LETSTRUST_EQAR_DID = "did:web:..."
 LETSTRUST_CORE_API = 'http://ssikit:7000/v1'
 LETSTRUST_SIGNATORY_API = 'http://ssikit:7001/v1'
+
+DEQAR_REPORT_URI = 'https://.../%s'
+DEQAR_AGENCY_URI = 'https://.../%s'
+DEQAR_INSTITUTION_URI = 'https://.../%s'
+
+VC_CACHE_MAX_AGE = 300
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# OrgReg sync
+ORGREG_API_RETRY = 3
+ORGREG_API_KEY = '...'
 
