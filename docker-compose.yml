@@ -22,6 +22,7 @@ services:
     environment:
       - DJANGO_SECRET_KEY
       - DATABASE_URL=postgres://deqar:${DEQAR_DB_PASS}@db:5432/${DEQAR_DB_NAME}
+      - WAITFORIT_TIMEOUT
     command: >
       ./wait-for-it.sh db:5432 --
       bash -c "python manage.py collectstatic --no-input
@@ -44,6 +45,7 @@ services:
       - DJANGO_SECRET_KEY
       - DJANGO_SETTINGS_MODULE=eqar_backend.settings
       - DATABASE_URL=postgres://deqar:${DEQAR_DB_PASS}@db:5432/${DEQAR_DB_NAME}
+      - WAITFORIT_TIMEOUT
     depends_on:
       - redis
       - api
