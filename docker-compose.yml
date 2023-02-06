@@ -27,7 +27,7 @@ services:
       ./wait-for-it.sh db:5432 --
       bash -c "python manage.py collectstatic --no-input
       && python manage.py migrate
-      && gunicorn --timeout=30 --workers=2 --log-file=- --bind :8000 eqar_backend.wsgi:application"
+      && gunicorn --timeout=${GUNICORN_TIMEOUT:-30} --workers=2 --log-file=- --bind :8000 eqar_backend.wsgi:application"
     depends_on:
       - db
       - solr
