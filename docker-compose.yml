@@ -17,6 +17,7 @@ services:
     build: ./api
     volumes:
       - ${DJANGO_SETTINGS:-./settings_local.py}:/deqar/eqar_backend/settings_components/local.py:ro
+      - ./europass-schema:/deqar/connectapi/europass/schema:ro
       - reports:/api/reports
       - staticfiles:/api/static
     environment:
@@ -39,6 +40,7 @@ services:
       bash -c "celery -A eqar_backend worker -l info"
     volumes:
       - ${DJANGO_SETTINGS:-./settings_local.py}:/deqar/eqar_backend/settings_components/local.py:ro
+      - ./europass-schema:/deqar/connectapi/europass/schema:ro
       - reports:/api/reports
       - staticfiles:/api/static
     environment:

@@ -1,6 +1,7 @@
 .env
 api/
 initdb.d/
+europass-schema/
 solr/cores/
 solr/lib/
 settings_local.py
