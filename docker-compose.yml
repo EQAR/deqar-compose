@@ -75,6 +75,8 @@ services:
   solr:
     image: solr:7
     restart: always
+    environment:
+      - SOLR_LOG_LEVEL=WARN
     volumes:
       - solr:/opt/solr/server/solr/mycores
       - ./solr/create-update-cores.sh:/docker-entrypoint-initdb.d/create-update-cores.sh:ro
