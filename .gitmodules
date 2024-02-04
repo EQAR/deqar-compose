@@ -1,0 +1,6 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:EQAR/eqar_backend.git
+[submodule "solr/cores"]
+	path = solr/cores
+	url = git@github.com:EQAR/deqar_solr.git

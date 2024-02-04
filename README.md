@@ -4,8 +4,7 @@
 
 Getting started:
 
-- Check out [eqar_backend](https://github.com/EQAR/eqar_backend) repo into `api/`
-- Check out [deqar_solr](https://github.com/EQAR/deqar_solr) repo into `solr/cores/`
+- Run `git submodule update` to clone the submodules [eqar_backend](https://github.com/EQAR/eqar_backend) and [deqar_solr](https://github.com/EQAR/deqar_solr)
 - Place required Solr modules into `solr/lib/`
 - Create `settings_local.py` from `settings_local.example.py`
 - Create `.env` with at least the following variables:
