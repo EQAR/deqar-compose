@@ -94,6 +94,7 @@ LETSTRUST_SIGNATORY_API = 'http://ssikit:7001/v1'
 DEQAR_REPORT_URI = 'https://.../%s'
 DEQAR_AGENCY_URI = 'https://.../%s'
 DEQAR_INSTITUTION_URI = 'https://.../%s'
+DEQAR_COUNTRY_URI = 'https://.../%s'
 
 VC_CACHE_MAX_AGE = 300
 
