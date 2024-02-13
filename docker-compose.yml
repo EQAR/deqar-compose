@@ -31,6 +31,7 @@ services:
       && gunicorn --timeout=${GUNICORN_TIMEOUT:-30} --workers=2 --log-file=- --bind :8000 eqar_backend.wsgi:application"
     depends_on:
       - db
+      - redis
       - solr
 
   celery:
@@ -49,6 +50,7 @@ services:
       - DATABASE_URL=postgres://deqar:${DEQAR_DB_PASS}@db:5432/${DEQAR_DB_NAME}
       - WAITFORIT_TIMEOUT
     depends_on:
+      - db
       - redis
       - api
       - solr
