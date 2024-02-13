@@ -19,6 +19,7 @@ while read -r source ; do
     else
         /opt/docker-solr/scripts/precreate-core $core
     fi
+    [ -f "$target/conf/managed-schema" ] && rm -v "$target/conf/managed-schema"
     cp -uv $source/* $target/conf
 done < <(find $repodir -type d -maxdepth 1 -mindepth 1 ! -name .git)
 
