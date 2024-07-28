@@ -85,6 +85,10 @@ SOLR_CORE_AGENCIES = 'deqar-agencies'
 SOLR_CORE_REPORTS = 'deqar-reports'
 SOLR_CORE_REPORTS_V3 = 'deqar-reports-v3'
 
+# Meilisearch
+MEILI_API_URL = "http://meili:7700"
+#MEILI_API_KEY
+
 # settings for VC issuance
 LETSTRUST_EQAR_EBSI_DID = "did:ebsi:..."
 LETSTRUST_EQAR_DID = "did:web:..."

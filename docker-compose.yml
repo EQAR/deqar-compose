@@ -33,6 +33,7 @@ services:
       - db
       - redis
       - solr
+      - meili
 
   celery:
     restart: always
@@ -54,6 +55,7 @@ services:
       - redis
       - api
       - solr
+      - meili
 
   redis:
     image: redis:alpine
@@ -85,9 +87,18 @@ services:
       - ./solr/cores:/opt/solr-cores-repo:ro
       - ./solr/lib:/opt/solr/server/solr/lib:ro
 
+  meili:
+    image: getmeili/meilisearch:v1.7
+    restart: always
+    environment:
+      - MEILI_LOG_LEVEL=INFO
+    volumes:
+      - meili:/meili_data
+
 volumes:
   pgdata:
   solr:
+  meili:
   reports:
   staticfiles:
   redis:
