@@ -12,6 +12,8 @@ services:
       - ${NGINX_CONF:-./nginx.conf}:/etc/nginx/templates/default.conf.template:ro
       - reports:/usr/share/nginx/html/reports:ro
       - staticfiles:/usr/share/nginx/html/static:ro
+    environment:
+      - MEILI_SEARCH_KEY
 
   api:
     build: ./api
