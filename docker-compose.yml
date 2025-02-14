@@ -65,7 +65,7 @@ services:
       - redis:/data
 
   db:
-    image: postgres:9
+    image: postgres:17
     restart: always
     ports:
       - "${DEQAR_DB_PORT}:5432"
@@ -73,7 +73,6 @@ services:
         POSTGRES_USER: deqar
         POSTGRES_PASSWORD: ${DEQAR_DB_PASS}
         POSTGRES_DB: ${DEQAR_DB_NAME}
-        PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ${INITDB_DIR:-./initdb.d}:/docker-entrypoint-initdb.d:ro
       - pgdata:/var/lib/postgresql/data
